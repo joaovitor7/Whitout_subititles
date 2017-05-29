@@ -22,66 +22,93 @@ def separarPalavras(frases):
 
 frases=separarFrases(input)
 words=separarPalavras(frases)
-alfabeto=list(string.ascii_lowercase)
+def removerPont(words):
+    alfabeto=list(string.ascii_lowercase)
+    alfabeto+=list(string.ascii_uppercase)
+    for word in words:
+        y=word
+        if word[0:1] not in alfabeto:
+            if (word.startswith(".")):
+                new=word[3:]
+                if word.startswith("..."):
+                    new=word[3:]
+                else:
+                    new=word[1:]
+                if new not in words:
+                    words.append(new)
 
-for y in words:
-    word=y.lower()
-    if word[0:1] not in alfabeto:
-        if (word.startswith("...")):
-            new=word[3:]
-            if new not in words:
-                words.append(new)
+                    words.remove(y)
 
+            elif (word[0:1])=="-":
                 words.remove(y)
+            elif(words[0:1])=='"':
+                new=word[1:-1]
+                if new not in words:
+                    words.append(new)
 
-        elif (word[0:1])=="-":
-            words.remove(y)
-        elif(words[0:1])=='"':
-            new=word[1:-1]
-            if new not in words:
-                words.append(new)
+                    words.remove(y)
+            elif(word[0:1])=='[':
+                new=word[1:-1]
+                if new not in words:
+                    words.append(new)
 
-                words.remove(y)
-        elif(word[0:1])=='[':
-            new=word[1:-1]
-            if new not in words:
-                words.append(new)
-
-                words.remove(y)
-
-        else:
-            new=word[1:]
-            if new not in words:
-                words.append(new)
-
-                words.remove(y)
-    elif word[-1] not in alfabeto:
-        if (word.endswith(".")):
-            if (word.endswith("...")):
-                new = word[1:-3]
+                    words.remove(y)
 
             else:
+                new=word[1:]
+                if new not in words:
+                    words.append(new)
+
+                    words.remove(y)
+        elif word[-1] not in alfabeto:
+            if (word.endswith(".")):
+
+                words.remove(y)
+
+
+                if (word.endswith("...")):
+                    new = word[0:-3]
+
+                else:
+                    new=word[0:-1]
+
+                if new not in words:
+                    words.append(new)
+
+
+
+            elif (word.endswith("?")):
+
+                words.remove(y)
+                new=word[0:-1]
+                if new not in words:
+                    words.append(new)
+
+            elif (word.endswith("]")):
+
+                words.remove(y)
                 new=word[1:-1]
-            if new not in words:
-                words.append(new)
-                words.remove(y)
-
-
-
-        elif (word.endswith("?")):
-
-            new=word[1:-1]
-            if new not in words:
-                words.append(new)
+                if new not in words:
+                    words.append(new)
+            elif (word.endswith("!")):
 
                 words.remove(y)
-        elif (word.endswith("]")):
-
-            new=word[1:-1]
-            if new not in words:
-                words.append(new)
+                new=word[0:-1]
+                if new not in words:
+                    words.append(new)
+            elif (word.endswith(",")):
 
                 words.remove(y)
+                new=word[0:-1]
+                if new not in words:
+                    words.append(new)
+
+    return words
+words=removerPont(words)
+for x in words:
+    if x[-1:]==".":
+        print (x)
+
 
 print(words)
 
