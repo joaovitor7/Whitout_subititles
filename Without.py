@@ -1,3 +1,4 @@
+import string
 input=open("friends.s01e01.720p.bluray.x264-psychd.str","r")
 def separarFrases(input):
     linhas=input.readlines()
@@ -21,5 +22,67 @@ def separarPalavras(frases):
 
 frases=separarFrases(input)
 words=separarPalavras(frases)
+alfabeto=list(string.ascii_lowercase)
+
+for y in words:
+    word=y.lower()
+    if word[0:1] not in alfabeto:
+        if (word.startswith("...")):
+            new=word[3:]
+            if new not in words:
+                words.append(new)
+
+                words.remove(y)
+
+        elif (word[0:1])=="-":
+            words.remove(y)
+        elif(words[0:1])=='"':
+            new=word[1:-1]
+            if new not in words:
+                words.append(new)
+
+                words.remove(y)
+        elif(word[0:1])=='[':
+            new=word[1:-1]
+            if new not in words:
+                words.append(new)
+
+                words.remove(y)
+
+        else:
+            new=word[1:]
+            if new not in words:
+                words.append(new)
+
+                words.remove(y)
+    elif word[-1] not in alfabeto:
+        if (word.endswith(".")):
+            if (word.endswith("...")):
+                new = word[1:-3]
+
+            else:
+                new=word[1:-1]
+            if new not in words:
+                words.append(new)
+                words.remove(y)
+
+
+
+        elif (word.endswith("?")):
+
+            new=word[1:-1]
+            if new not in words:
+                words.append(new)
+
+                words.remove(y)
+        elif (word.endswith("]")):
+
+            new=word[1:-1]
+            if new not in words:
+                words.append(new)
+
+                words.remove(y)
+
 print(words)
+
 print("You need to know at least %a words to understand that episode without subititles"%len(words))
