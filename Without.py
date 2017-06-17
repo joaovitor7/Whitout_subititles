@@ -8,7 +8,7 @@ def separarFrases(input):
         lin=linhas[i]
         if lin[0:1] not in numeros:
             if lin.rstrip()!="":
-                frases.append(lin.rstrip())
+                frases.append(lin.rstrip().lower())
     return frases
 
 def separarPalavras(frases):
@@ -22,94 +22,25 @@ def separarPalavras(frases):
 
 frases=separarFrases(input)
 words=separarPalavras(frases)
-def removerPont(words):
+
+
+def retirarPont(word):
+    newString=""
     alfabeto=list(string.ascii_lowercase)
-    alfabeto+=list(string.ascii_uppercase)
-    for word in words:
-        y=word
-        if word[0:1] not in alfabeto:
-            if (word.startswith(".")):
-                new=word[3:]
-                if word.startswith("..."):
-                    new=word[3:]
-                else:
-                    new=word[1:]
-                if new not in words:
-                    words.append(new)
-
-                    words.remove(y)
-
-            elif (word[0:1])=="-":
-                words.remove(y)
-            elif(words[0:1])=='"':
-                new=word[1:-1]
-                if new not in words:
-                    words.append(new)
-
-                    words.remove(y)
-            elif(word[0:1])=='[':
-                new=word[1:-1]
-                if new not in words:
-                    words.append(new)
-
-                    words.remove(y)
-
-            else:
-                new=word[1:]
-                if new not in words:
-                    words.append(new)
-
-                    words.remove(y)
-        elif word[-1] not in alfabeto:
-            if (word.endswith(".")):
-
-                words.remove(y)
+    for i in range(1,len(word)+1):
+        letra=word[i-1:i]
+        if letra in alfabeto:
+            newString+=letra
+    return newString
 
 
-                if (word.endswith("...")):
-                    new = word[0:-3]
-
-                else:
-                    new=word[0:-1]
-
-                if new not in words:
-                    words.append(new)
+l=[]
+for word in words:
+    new=retirarPont(word)
+    if new not in l:
+        l.append(new)
 
 
+print(l)
 
-            elif (word.endswith("?")):
-
-                words.remove(y)
-                new=word[0:-1]
-                if new not in words:
-                    words.append(new)
-
-            elif (word.endswith("]")):
-
-                words.remove(y)
-                new=word[1:-1]
-                if new not in words:
-                    words.append(new)
-            elif (word.endswith("!")):
-
-                words.remove(y)
-                new=word[0:-1]
-                if new not in words:
-                    words.append(new)
-            elif (word.endswith(",")):
-
-                words.remove(y)
-                new=word[0:-1]
-                if new not in words:
-                    words.append(new)
-
-    return words
-words=removerPont(words)
-for x in words:
-    if x[-1:]==".":
-        print (x)
-
-
-print(words)
-
-print("You need to know at least %a words to understand that episode without subititles"%len(words))
+print("You need to know at least %a words to understand this episode without subititles"%len(l))
