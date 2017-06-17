@@ -39,8 +39,6 @@ for word in words:
     new=retirarPont(word)
     if new not in l:
         l.append(new)
-
-
 print(l)
 
 print("You need to know at least %a words to understand this episode without subititles"%len(l))
