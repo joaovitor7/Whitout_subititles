@@ -1,5 +1,6 @@
 import string
-input=open("friends.s01e01.720p.bluray.x264-psychd.str","r")
+#input=open("friends.s01e01.720p.bluray.x264-psychd.str","r")
+input=open("star_wars.str","r")
 def separarFrases(input):
     linhas=input.readlines()
     frases=[]
@@ -34,11 +35,12 @@ def retirarPont(word):
     return newString
 
 
-l=[]
+last=[]
 for word in words:
     new=retirarPont(word)
-    if new not in l:
-        l.append(new)
-print(l)
+    if new not in last:
+        last.append(new)
+print(last)
+print(len(last)/7)
 
-print("You need to know at least %a words to understand this episode without subititles"%len(l))
+print("You need to know at least %a words to understand this episode without subititles"%len(last))
